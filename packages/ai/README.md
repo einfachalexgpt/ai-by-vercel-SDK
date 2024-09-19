@@ -1,42 +1,42 @@
+# **AI SDK**
+
 ![hero illustration](./assets/hero.gif)
 
-# AI SDK
+Das [AI SDK](https://sdk.vercel.ai/docs) ist ein TypeScript-Toolkit, das dabei hilft, KI-gestützte Anwendungen mit beliebten Frameworks wie Next.js, React, Svelte, Vue und Laufzeiten wie Node.js zu entwickeln.
 
-The [AI SDK](https://sdk.vercel.ai/docs) is a TypeScript toolkit designed to help you build AI-powered applications using popular frameworks like Next.js, React, Svelte, Vue and runtimes like Node.js.
-
-To learn more about how to use the AI SDK, check out our [API Reference](https://sdk.vercel.ai/docs/reference) and [Documentation](https://sdk.vercel.ai/docs).
+Um mehr über die Verwendung des AI SDK zu erfahren, sieh dir unsere [API-Referenz](https://sdk.vercel.ai/docs/reference) und [Dokumentation](https://sdk.vercel.ai/docs) an.
 
 ## Installation
 
-You will need Node.js 18+ and pnpm installed on your local development machine.
+Du benötigst Node.js 18+ und pnpm auf deinem lokalen Entwicklungsrechner.
 
 ```shell
 npm install ai
 ```
 
-## Usage
+## Nutzung
 
-### AI SDK Core
+### **AI SDK Core**
 
-The [AI SDK Core](https://sdk.vercel.ai/docs/ai-sdk-core/overview) module provides a unified API to interact with model providers like [OpenAI](https://sdk.vercel.ai/providers/ai-sdk-providers/openai), [Anthropic](https://sdk.vercel.ai/providers/ai-sdk-providers/anthropic), [Google](https://sdk.vercel.ai/providers/ai-sdk-providers/google-generative-ai), and more.
+Das [AI SDK Core](https://sdk.vercel.ai/docs/ai-sdk-core/overview)-Modul bietet eine einheitliche API zur Interaktion mit Modellanbietern wie [OpenAI](https://sdk.vercel.ai/providers/ai-sdk-providers/openai), [Anthropic](https://sdk.vercel.ai/providers/ai-sdk-providers/anthropic), [Google](https://sdk.vercel.ai/providers/ai-sdk-providers/google-generative-ai) und mehr.
 
-You will then install the model provider of your choice.
+Zunächst installierst du den Modellanbieter deiner Wahl:
 
 ```shell
 npm install @ai-sdk/openai
 ```
 
-###### @/index.ts (Node.js Runtime)
+##### Beispiel: **@/index.ts (Node.js Runtime)**
 
 ```ts
 import { generateText } from 'ai';
-import { openai } from '@ai-sdk/openai'; // Ensure OPENAI_API_KEY environment variable is set
+import { openai } from '@ai-sdk/openai'; // Achte darauf, dass die Umgebungsvariable OPENAI_API_KEY gesetzt ist
 
 async function main() {
   const { text } = await generateText({
     model: openai('gpt-4-turbo'),
-    system: 'You are a friendly assistant!',
-    prompt: 'Why is the sky blue?',
+    system: 'Du bist ein freundlicher Assistent!',
+    prompt: 'Warum ist der Himmel blau?',
   });
 
   console.log(text);
@@ -45,11 +45,11 @@ async function main() {
 main();
 ```
 
-### AI SDK UI
+### **AI SDK UI**
 
-The [AI SDK UI](https://sdk.vercel.ai/docs/ai-sdk-ui/overview) module provides a set of hooks that help you build chatbots and generative user interfaces. These hooks are framework agnostic, so they can be used in Next.js, React, Svelte, Vue, and SolidJS.
+Das [AI SDK UI](https://sdk.vercel.ai/docs/ai-sdk-ui/overview)-Modul bietet eine Reihe von Hooks, die beim Erstellen von Chatbots und generativen Benutzeroberflächen helfen. Diese Hooks sind framework-unabhängig und können in Next.js, React, Svelte, Vue und SolidJS verwendet werden.
 
-###### @/app/page.tsx (Next.js App Router)
+##### Beispiel: **@/app/page.tsx (Next.js App Router)**
 
 ```tsx
 'use client';
@@ -72,7 +72,7 @@ export default function Page() {
       <form onSubmit={handleSubmit}>
         <input
           value={input}
-          placeholder="Send a message..."
+          placeholder="Nachricht senden..."
           onChange={handleInputChange}
           disabled={isLoading}
         />
@@ -82,7 +82,7 @@ export default function Page() {
 }
 ```
 
-###### @/app/api/chat/route.ts (Next.js App Router)
+##### Beispiel: **@/app/api/chat/route.ts (Next.js App Router)**
 
 ```ts
 import { CoreMessage, streamText } from 'ai';
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
 
   const result = await streamText({
     model: openai('gpt-4'),
-    system: 'You are a helpful assistant.',
+    system: 'Du bist ein hilfsbereiter Assistent.',
     messages,
   });
 
@@ -101,13 +101,13 @@ export async function POST(req: Request) {
 }
 ```
 
-### AI SDK RSC
+### **AI SDK RSC**
 
-The [AI SDK RSC](https://sdk.vercel.ai/docs/ai-sdk-rsc/overview) module provides an alternative API that also helps you build chatbots and generative user interfaces for frameworks that support [React Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) (RSC).
+Das [AI SDK RSC](https://sdk.vercel.ai/docs/ai-sdk-rsc/overview)-Modul bietet eine alternative API, die ebenfalls beim Erstellen von Chatbots und generativen Benutzeroberflächen für Frameworks hilft, die [React Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components) (RSC) unterstützen.
 
-This API leverages the benefits of [Streaming](https://nextjs.org/docs/app/building-your-application/rendering/server-components#streaming) and [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations) offered by RSC, thus improving the developer experience of managing states between server/client and building generative user interfaces.
+Diese API nutzt die Vorteile des [Streamings](https://nextjs.org/docs/app/building-your-application/rendering/server-components#streaming) und der [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), um die Verwaltung von Zuständen zwischen Server und Client zu verbessern.
 
-###### @/app/actions.tsx (Next.js App Router)
+##### Beispiel: **@/app/actions.tsx (Next.js App Router)**
 
 ```tsx
 import { streamUI } from 'ai/rsc';
@@ -119,7 +119,7 @@ async function submitMessage() {
   const stream = await streamUI({
     model: openai('gpt-4-turbo'),
     messages: [
-      { role: 'system', content: 'You are a friendly bot!' },
+      { role: 'system', content: 'Du bist ein freundlicher Bot!' },
       { role: 'user', content: input },
     ],
     text: ({ content, done }) => {
@@ -127,11 +127,11 @@ async function submitMessage() {
     },
     tools: {
       deploy: {
-        description: 'Deploy repository to vercel',
+        description: 'Repository auf Vercel deployen',
         parameters: z.object({
           repositoryName: z
             .string()
-            .describe('The name of the repository, example: vercel/ai-chatbot'),
+            .describe('Name des Repositories, z.B.: vercel/ai-chatbot'),
         }),
         generate: async function* ({ repositoryName }) {
           yield <div>Cloning repository {repositoryName}...</div>;
@@ -150,7 +150,7 @@ async function submitMessage() {
 }
 ```
 
-###### @/app/ai.ts (Next.js App Router)
+##### Beispiel: **@/app/ai.ts (Next.js App Router)**
 
 ```tsx
 import { createAI } from 'ai/rsc';
@@ -165,7 +165,7 @@ export const AI = createAI({
 });
 ```
 
-###### @/app/layout.tsx (Next.js App Router)
+##### Beispiel: **@/app/layout.tsx (Next.js App Router)**
 
 ```tsx
 import { ReactNode } from 'react';
@@ -176,7 +176,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 }
 ```
 
-###### @/app/page.tsx (Next.js App Router)
+##### Beispiel: **@/app/page.tsx (Next.js App Router)**
 
 ```tsx
 'use client';
@@ -203,25 +203,25 @@ export default function Page() {
           setMessages(currentMessages => [...currentMessages, ui]);
         }}
       >
-        Submit
+        Senden
       </button>
     </div>
   );
 }
 ```
 
-## Templates
+## **Templates**
 
-We've built [templates](https://vercel.com/templates?type=ai) that include AI SDK integrations for different use cases, providers, and frameworks. You can use these templates to get started with your AI-powered application.
+Wir haben [Templates](https://vercel.com/templates?type=ai) erstellt, die AI SDK-Integrationen für verschiedene Anwendungsfälle, Anbieter und Frameworks enthalten. Diese Templates helfen dir, deine AI-Anwendung schnell zu starten.
 
-## Community
+## **Community**
 
-The AI SDK community can be found on [GitHub Discussions](https://github.com/vercel/ai/discussions) where you can ask questions, voice ideas, and share your projects with other people.
+Die AI SDK-Community findest du auf [GitHub Discussions](https://github.com/vercel/ai/discussions), wo du Fragen stellen, Ideen äußern und deine Projekte mit anderen teilen kannst.
 
-## Contributing
+## **Contributing**
 
-Contributions to the AI SDK are welcome and highly appreciated. However, before you jump right into it, we would like you to review our [Contribution Guidelines](https://github.com/vercel/ai/blob/main/CONTRIBUTING.md) to make sure you have smooth experience contributing to AI SDK.
+Beiträge zum AI SDK sind willkommen und sehr geschätzt. Bevor du loslegst, sieh dir bitte unsere [Beitragsrichtlinien](https://github.com/vercel/ai/blob/main/CONTRIBUTING.md) an, um einen reibungslosen Ablauf sicherzustellen.
 
-## Authors
+## **Autoren**
 
-This library is created by [Vercel](https://vercel.com) and [Next.js](https://nextjs.org) team members, with contributions from the [Open Source Community](https://github.com/vercel/ai/graphs/contributors).
+Diese Bibliothek wurde von [Vercel](https://vercel.com) und Mitgliedern des [Next.js](https://nextjs.org)-Teams erstellt, mit Beiträgen der [Open-Source-Community](https://github.com/vercel/ai/graphs/contributors).
